@@ -1,62 +1,45 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import ReloadClients from './client_reload.jsx'
 import CreateClient from './client_create.jsx'
 import DeleteClient from './client_delete.jsx'
+import UpdateClient from './client_update.jsx'
 
 function Client() {
-    const [clients, setClients] = useState([])
-    const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '' })
-    const [message, setMessage] = useState(null)
-    const [error, setError] = useState(null)
+    const [activeSection, setActiveSection] = useState('list') // por defecto lista
 
-    // Obtener lista de clientes
-    useEffect(() => {
-        fetch('http://localhost:5021/api/clients')
-        .then(res => {
-            if (!res.ok) throw new Error('Error al obtener clientes')
-            return res.json()
-        })
-        .then(data => setClients(data))
-        .catch(err => setError(err.message))
-    }, [])
-
-    // Manejar cambios en el formulario
-    const handleChange = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
-
-    // Enviar nuevo cliente
-    const handleSubmit = e => {
-        e.preventDefault()
-        fetch('http://localhost:5021/api/add_client', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-            setMessage(data.error)
-            } else {
-            setMessage('Cliente agregado con éxito')
-            setClients([...clients, data.client]) // Agregar nuevo cliente a la lista
-            setFormData({ name: '', email: '', phone: '', address: '' }) // Limpiar formulario
-            }
-        })
-        .catch(() => setMessage('Error al conectar con el servidor'))
+    const renderSection = () => {
+        switch (activeSection) {
+            case 'create':
+                return <CreateClient />
+            case 'list':
+                return <ReloadClients />
+            case 'delete':
+                return <DeleteClient />
+            case 'update':
+                return <UpdateClient />
+            default:
+                return null
+        }
     }
 
     return (
-        <div>
-            <h3 style={{ color: 'YELLOW' }}>LISTA CLIENTES</h3>
-            <ReloadClients/>
+        <div style={{ padding: '1rem', color: 'white' }}>
+            <nav style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+                <button onClick={() => setActiveSection('create')}>Crear Cliente</button>
+                <button onClick={() => setActiveSection('list')}>Lista de Clientes</button>
+                <button onClick={() => setActiveSection('delete')}>Eliminar Cliente</button>
+                <button onClick={() => setActiveSection('update')}>Actualizar Cliente</button>
+            </nav>
 
-            <h3 style={{ color: 'YELLOW' }}>CREAR CLIENTE</h3>
-            <CreateClient/>
-
-            <h3 style={{ color: 'YELLOW' }}>BORRAR CLIENTE</h3>
-            <DeleteClient/>
-
+            <div>
+                <h3 style={{ color: 'LIGHTBLUE', textTransform: 'uppercase' }}>
+                    {activeSection === 'create' && 'Crear Cliente'}
+                    {activeSection === 'list' && 'Lista de Clientes'}
+                    {activeSection === 'delete' && 'Eliminar Cliente'}
+                    {activeSection === 'update' && 'Actualizar Cliente mediante ID'}
+                </h3>
+                {renderSection()}
+            </div>
         </div>
     )
 }

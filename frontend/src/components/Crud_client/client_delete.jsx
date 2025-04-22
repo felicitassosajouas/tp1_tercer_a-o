@@ -42,5 +42,4 @@ function DeleteClient({ onDeleted }) {
         </div>
     );
 }
-
 export default DeleteClient;
