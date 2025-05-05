@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ReloadClients from './client_reload.jsx'
+import ReadClients from './client_read.jsx'
 import CreateClient from './client_create.jsx'
 import DeleteClient from './client_delete.jsx'
 import UpdateClient from './client_update.jsx'
@@ -12,7 +12,7 @@ function Client() {
             case 'create':
                 return <CreateClient />
             case 'list':
-                return <ReloadClients />
+                return <ReadClients />
             case 'delete':
                 return <DeleteClient />
             case 'update':

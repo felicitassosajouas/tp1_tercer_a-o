@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-function ReloadClients({ onClientsLoaded }) {
+function ReadClients({ onClientsLoaded }) {
 
     {/* const [error, setError] = useState(null) */} 
         
@@ -32,4 +32,4 @@ function ReloadClients({ onClientsLoaded }) {
     )
 }
 
-export default ReloadClients
+export default ReadClients

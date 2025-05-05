@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import logo from './images/logo.png'
 import Footer from './components/footer.jsx'
-import Client from './components/Crud_client/client.jsx'
+import Client from './components/Client/client.jsx'
+import Vehicle from './components/Vehicle/vehicle.jsx'
 import './App.css'
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
         </button>
         <Client />
         <Footer />
+        <Vehicle/>
       </div>
     </>
   )

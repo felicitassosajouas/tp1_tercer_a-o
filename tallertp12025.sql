@@ -5,8 +5,8 @@ USE tp1_tercer_año;
 CREATE TABLE clients (
     id_client INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(250) NOT NULL,
-    email VARCHAR(30) NOT NULL,
-    phone VARCHAR(10) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(11) NOT NULL,
     address VARCHAR(100) NOT NULL
 );
 
@@ -32,3 +32,8 @@ CREATE TABLE repairs (
     FOREIGN KEY (id_vehicle) REFERENCES vehicles(id_vehicle) ON DELETE CASCADE,
     FOREIGN KEY (id_client) REFERENCES clients(id_client) ON DELETE CASCADE
 );
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
+FLUSH PRIVILEGES;
+
+SELECT * FROM clients;
